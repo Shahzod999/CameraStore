@@ -1,0 +1,40 @@
+@import "/src/media.scss";
+
+.brand {
+    margin-top: 50px;
+    overflow: hidden;
+    
+    @include media(550) {
+        width: 100%;
+    }
+
+    &__box {
+        display: flex;
+        align-items: center;
+        column-gap: 100px;
+        transform: translateX(0%);
+        animation: brand 40s linear infinite;
+
+        &:hover {
+            animation-play-state: paused;
+        }
+        
+        @include media(1200) {
+            animation: brand 10s linear infinite;
+        }
+    }
+
+    &__img {
+        cursor: pointer;
+    }
+}
+
+@keyframes brand {
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(-225%);
+    }
+}

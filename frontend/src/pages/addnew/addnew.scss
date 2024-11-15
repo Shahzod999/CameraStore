@@ -1,0 +1,398 @@
+@import "/src/media.scss";
+
+.add-product {
+    max-width: 1300px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+    margin-bottom: 50px;
+
+    h1 {
+        text-align: center;
+        color: #008080;
+        margin-bottom: 30px;
+        font-size: 2.5rem;
+        font-weight: 700;
+
+        @include media(768) {
+            font-size: 2rem;
+        }
+
+        @include media(425) {
+            font-size: 1.8rem;
+        }
+    }
+
+    .form-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        @include media(1024) {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .form-image {
+            flex: 1.5;
+            margin-right: 30px;
+            border: 2px dashed #008080;
+            padding: 40px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f7f7f7;
+
+            @include media(1024) {
+                margin-right: 0;
+                padding: 30px;
+                width: 90%;
+            }
+
+            @include media(425) {
+                padding: 20px;
+                overflow: hidden;
+            }
+
+            label {
+                display: block;
+                margin-bottom: 15px;
+                color: #000;
+                font-size: 20px;
+                font-weight: bold;
+
+                @include media(425) {
+                    font-size: 18px;
+                }
+            }
+            
+            
+
+            input[type="file"] {
+                display: block;
+                margin-bottom: 15px;
+                font-size: 18px;
+                padding: 15px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+
+                &:hover {
+                    background-color: #e0e0e0;
+                }
+
+                @include media(768) {
+                    font-size: 16px;
+                    padding: 12px;
+                }
+
+                @include media(425) {
+                    font-size: 14px;
+                    padding: 10px;
+                    margin-left: 40px;
+                    // text-align: center;
+                }
+            }
+
+            .image-preview {
+                width: 100%;
+                height: auto;
+                border: 1px solid #d2d2d2;
+                border-radius: 5px;
+                margin-top: 15px;
+                max-height: 500px;
+                object-fit: cover;
+
+                @include media(768) {
+                    max-height: 300px;
+                }
+
+                @include media(425) {
+                    max-height: 250px;
+                }
+            }
+        }
+
+        .product-form {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+
+            @include media(1024) {
+                width: 90%;
+                align-items: center;
+            }
+
+            .form-group {
+                width: 100%;
+                margin-bottom: 20px;
+
+                @include media(768) {
+                    width: 100%;
+                }
+
+                label {
+                    display: block;
+                    margin-bottom: 5px;
+                    color: #000;
+                    font-weight: bold;
+                    font-size: 16px;
+
+                    @include media(425) {
+                        font-size: 14px;
+                    }
+                }
+
+                input, textarea {
+                    width: 100%;
+                    padding: 12px;
+                    border: 1px solid #d2d2d2;
+                    border-radius: 5px;
+                    font-size: 16px;
+                    transition: border-color 0.3s;
+
+                    &:focus {
+                        border-color: #008080;
+                    }
+
+                    @include media(768) {
+                        padding: 10px;
+                        font-size: 15px;
+                    }
+
+                    @include media(425) {
+                        padding: 8px;
+                        font-size: 14px;
+                    }
+                }
+            }
+
+            .submit-button {
+                padding: 12px;
+                background-color: #008080;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                font-size: 18px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+
+                &:hover {
+                    background-color: #006666;
+                }
+
+                @include media(768) {
+                    font-size: 16px;
+                    padding: 10px;
+                }
+
+                @include media(425) {
+                    font-size: 14px;
+                    padding: 8px;
+                }
+            }
+        }
+    }
+}
+@import "/src/media.scss";
+
+.add-product {
+    max-width: 1300px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+    margin-bottom: 50px;
+
+    h1 {
+        text-align: center;
+        color: #008080;
+        margin-bottom: 30px;
+        font-size: 2.5rem;
+        font-weight: 700;
+
+        @include media(768) {
+            font-size: 2rem;
+        }
+
+        @include media(425) {
+            font-size: 1.8rem;
+        }
+    }
+
+    .form-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        @include media(1024) {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .form-image {
+            flex: 1.5;
+            margin-right: 30px;
+            border: 2px dashed #008080;
+            padding: 40px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f7f7f7;
+
+            @include media(1024) {
+                margin-right: 0;
+                padding: 30px;
+                width: 90%;
+            }
+
+            @include media(425) {
+                padding: 20px;
+            }
+
+            label {
+                display: block;
+                margin-bottom: 15px;
+                color: #000;
+                font-size: 20px;
+                font-weight: bold;
+
+                @include media(425) {
+                    font-size: 18px;
+                }
+            }
+
+            input[type="file"] {
+                display: block;
+                margin-bottom: 15px;
+                font-size: 18px;
+                border: none;
+                padding: 15px;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+
+                &:hover {
+                    background-color: #e0e0e0;
+                }
+
+                @include media(768) {
+                    font-size: 16px;
+                    padding: 12px;
+                }
+
+                @include media(425) {
+                    font-size: 14px;
+                    padding: 10px;
+                }
+            }
+
+            .image-preview {
+                width: 100%;
+                height: auto;
+                border: 1px solid #d2d2d2;
+                border-radius: 5px;
+                margin-top: 15px;
+                max-height: 500px;
+                object-fit: cover;
+
+                @include media(768) {
+                    max-height: 300px;
+                }
+
+                @include media(425) {
+                    max-height: 250px;
+                }
+            }
+        }
+
+        .product-form {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+
+            @include media(1024) {
+                width: 90%;
+                align-items: center;
+            }
+
+            .form-group {
+                width: 100%;
+                margin-bottom: 20px;
+
+                @include media(768) {
+                    width: 100%;
+                }
+
+                label {
+                    display: block;
+                    margin-bottom: 5px;
+                    color: #000;
+                    font-weight: bold;
+                    font-size: 16px;
+
+                    @include media(425) {
+                        font-size: 14px;
+                    }
+                }
+
+                input, textarea {
+                    width: 100%;
+                    padding: 12px;
+                    border: 1px solid #d2d2d2;
+                    border-radius: 5px;
+                    font-size: 16px;
+                    transition: border-color 0.3s;
+
+                    &:focus {
+                        border-color: #008080;
+                    }
+
+                    @include media(768) {
+                        padding: 10px;
+                        font-size: 15px;
+                    }
+
+                    @include media(425) {
+                        padding: 8px;
+                        font-size: 14px;
+                    }
+                }
+            }
+
+            .submit-button {
+                padding: 12px;
+                background-color: #008080;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                font-size: 18px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+
+                &:hover {
+                    background-color: #006666;
+                }
+
+                @include media(768) {
+                    font-size: 16px;
+                    padding: 10px;
+                }
+
+                @include media(425) {
+                    font-size: 14px;
+                    padding: 8px;
+                }
+            }
+        }
+    }
+}
