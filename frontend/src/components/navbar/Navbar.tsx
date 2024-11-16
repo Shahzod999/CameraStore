@@ -8,11 +8,28 @@ import { FiShoppingCart } from "react-icons/fi";
 import { MdFavoriteBorder } from "react-icons/md";
 import { MdOutlineAddBusiness } from "react-icons/md";
 import { GrEdit } from "react-icons/gr";
+import { LuLogOut } from "react-icons/lu";
 import { Link } from "react-router-dom";
-import Category from "../Category/Category";
 import Cookie from "../cookie/Cookie";
+import Category from "../category/Category";
+import { useAppDispatch, useAppSelector } from "../../app/hooks/hooks";
+import { logOutState, selecteduserInfo } from "../../app/features/useInfoSlice";
+import { useLogOutMutation } from "../../app/api/userApiSlice";
 
 const Navbar = () => {
+  const dispatch = useAppDispatch();
+  const userInfo = useAppSelector(selecteduserInfo);
+  const [logOut] = useLogOutMutation();
+
+  const handleLogOut = async () => {
+    const ask = confirm("You are going to Logout");
+    if (ask) {
+      await logOut({}).unwrap();
+      dispatch(logOutState());
+      return;
+    }
+  };
+
   const [category, setCategory] = useState(false);
 
   return (
@@ -54,17 +71,23 @@ const Navbar = () => {
                 </Link>
               </li>
               <li className="navbar__item">
-                <Link to="/login" className="navbar__link-icon user">
-                  <FaRegUser />
-                </Link>
+                {userInfo ? (
+                  <span className="navbar__link-icon logOut" onClick={handleLogOut}>
+                    <LuLogOut />
+                  </span>
+                ) : (
+                  <Link to="/login" className="navbar__link-icon user">
+                    <FaRegUser />
+                  </Link>
+                )}
               </li>
               <li className="navbar__item">
-                <Link to="/addnew" className="navbar__link-icon add">
+                <Link to="/admin" className="navbar__link-icon add">
                   <MdOutlineAddBusiness />
                 </Link>
               </li>
               <li className="navbar__item">
-                <Link to="/login" className="navbar__link-icon edit">
+                <Link to="/admin/edit" className="navbar__link-icon edit">
                   <GrEdit />
                 </Link>
               </li>

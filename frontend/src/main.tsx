@@ -10,34 +10,48 @@ import Addnew from "./pages/addnew/Addnew";
 import Map from "./pages/map/Map";
 import { Provider } from "react-redux";
 import { store } from "./app/store.ts";
+import EditProducts from "./pages/edit/EditProducts.tsx";
+import ProdtectedRoutes from "./pages/ProdtectedRoutes/ProdtectedRoutes.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <>Error 404</>,
     children: [
       {
         path: "",
         element: <Card />,
       },
       {
-        path: "/login",
+        path: "login",
         element: <Login />,
       },
       {
-        path: "/basket",
+        path: "basket",
         element: <Basket />,
       },
       {
-        path: "/:id",
+        path: ":id",
         element: <SingleProduct />,
       },
       {
-        path: "/addnew",
-        element: <Addnew />,
+        path: "admin",
+        element: <ProdtectedRoutes />,
+        errorElement: <>Error 404</>,
+        children: [
+          {
+            path: "",
+            element: <Addnew />,
+          },
+          {
+            path: "edit",
+            element: <EditProducts />,
+          },
+        ],
       },
       {
-        path: "/map",
+        path: "map",
         element: <Map />,
       },
     ],

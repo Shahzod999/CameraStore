@@ -4,24 +4,34 @@ import { FaFacebook } from "react-icons/fa6";
 import { BsGoogle } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import { useLoginUserMutation, useUserRegisterMutation } from "../../app/api/userApiSlice";
-import { UserState } from "../../app/types/UserTypes";
+import { ErrorState, UserState } from "../../app/types/UserTypes";
+import { useAppDispatch } from "../../app/hooks/hooks";
+import { addUserInfo } from "../../app/features/useInfoSlice";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { register, handleSubmit } = useForm();
   const [isSignUp, setIsSignUp] = useState(false);
+  const [totalError, setTotalError] = useState("");
   const [userRegister] = useUserRegisterMutation();
   const [loginUser] = useLoginUserMutation();
 
   const toggleForm = () => setIsSignUp(!isSignUp);
 
   const onSubmit = async (data: UserState) => {
-    console.log(data);
     const action = isSignUp ? userRegister : loginUser;
     try {
       const res = await action(data).unwrap();
+      dispatch(addUserInfo(res?.email));
+      navigate("/");
       console.log(res);
     } catch (error) {
-      console.error("Error:", error);
+      console.log(error);
+
+      const errorMessage = (error as ErrorState)?.data?.message || "An unknown error occurred";
+      setTotalError(errorMessage);
     }
   };
 
@@ -40,6 +50,8 @@ const Login = () => {
           <a href="#" className="login__first-acc" onClick={toggleForm}>
             {isSignUp ? "Already have an account?" : "Don't have an account?"}
           </a>
+          <span>{totalError}</span>
+
           <a href="#" className="login__first-link" onClick={toggleForm}>
             {isSignUp ? "Sign In" : "Sign Up"}
           </a>

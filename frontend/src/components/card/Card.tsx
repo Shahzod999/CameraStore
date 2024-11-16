@@ -1,5 +1,4 @@
-import React from "react";
-import CardBox from "./cardBox";
+import CardBox from "./CardBox";
 import Header from "../header/Header";
 import Brand from "../brand/Brand";
 const card = () => {

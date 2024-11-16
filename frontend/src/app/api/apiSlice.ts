@@ -4,6 +4,6 @@ const baseQuery = fetchBaseQuery({ baseUrl: `${import.meta.env.VITE_REACT_APP_BA
 
 export const apiSlice = createApi({
   baseQuery,
-  tagTypes: ["Product", "Facilities", "Testimonials"],
+  tagTypes: ["Category", "Facilities", "Testimonials"],
   endpoints: () => ({}),
 });
