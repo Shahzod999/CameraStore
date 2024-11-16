@@ -1,6 +1,7 @@
 import { useAddNewCategoryMutation, useDeleteCategoryMutation, useGetAllCategoryQuery } from "../../app/api/categoryApiSlice";
 import { BiTrash } from "react-icons/bi";
 import { useState } from "react";
+import "./editProducts.scss";
 
 const EditProducts = () => {
   const [category, setCategory] = useState();
@@ -28,23 +29,23 @@ const EditProducts = () => {
     }
   };
 
+
+  const fakeData = ["text", "text2", 'text4', "text", "text2", 'text4', "text", "text2", 'text4', "text", "text2", "text2",]
+
   return (
-    <div>
-      {isLoading ? (
-        <>Loding...222</>
-      ) : (
-        <>
-          {data?.map((item) => (
-            <div key={item._id}>
-              <span>{item.name}</span>
-              <span onClick={() => handleDeleteCategory(item._id)}>
-                <BiTrash />
-              </span>
-            </div>
-          ))}
-          {isFetching && <>Loding...</>}
-        </>
-      )}
+    <div className="edit__box">
+      <div className="container">
+        {isLoading ? (
+          <>Loding...222</>
+        ) : (
+          <>
+            {fakeData?.map((item) => (
+              <button className="edit__button"><span>{item}</span> <span><BiTrash /></span></button>
+            ))}
+            {isFetching && <>Loding...</>}
+          </>
+        )}
+      </div>
       <form onSubmit={handleSubmit}>
         <label htmlFor="">Add New Category</label>
         <input type="text" onChange={(e) => setCategory(e.target.value)} />
