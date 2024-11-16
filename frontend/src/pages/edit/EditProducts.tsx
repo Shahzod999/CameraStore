@@ -31,7 +31,7 @@ const EditProducts = () => {
   return (
     <div>
       {isLoading ? (
-        <>Loding...</>
+        <>Loding...222</>
       ) : (
         <>
           {data?.map((item) => (
