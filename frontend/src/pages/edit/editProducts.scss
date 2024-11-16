@@ -1,61 +1,60 @@
 .edit__button {
-    padding: 15px 15px;
-    // display: block;
-    width: 150px;
-    display: flex;
-    justify-content: space-between;
-    font-size: 18px;
-    border: 2px solid #141414;
-    border-radius: 5px;
-    color: aliceblue;
-    background: #5c5c5c;
-    cursor: pointer;
+  padding: 15px 15px;
+  width: 150px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  border: 1px solid #141414;
+  border-radius: 5px;
+  color: aliceblue;
+  background: #5c5c5c;
+  cursor: pointer;
 }
 
 .edit__box {
-    margin-top: 20px;
+  margin-top: 20px;
 
-    .container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 25px;
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+  }
+
+  form {
+    display: flex;
+    align-items: center;
+    // column-gap: 10px;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 30px;
+    row-gap: 20px;
+
+    label {
+      font-size: 23px;
+      font-weight: 500;
+      color: #008080;
     }
 
-    form {
-        display: flex;
-        align-items: center;
-        // column-gap: 10px;
-        justify-content: center;
-        flex-direction: column;
-        margin-top: 30px;
-        row-gap: 20px;
-
-        label {
-            font-size: 23px;
-            font-weight: 500;
-            color: #008080;
-        }
-
-        input {
-            width: 100%;
-            max-width: 500px;
-            padding: 15px;
-            border-radius: 5px;
-            border: 2px solid #008080;
-            // outline: 2px solid #006767;
-            outline-offset: 1px;
-            outline-color: #005555;
-        }
-        
-        button {
-            padding: 10px 50px;
-            font-size: 20px;
-            border: none;
-            outline: none;
-            background: #008080;
-            color: aliceblue;
-            border-radius: 10px;
-            cursor: pointer;
-        }
+    input {
+      width: 100%;
+      max-width: 500px;
+      padding: 15px;
+      border-radius: 5px;
+      border: 2px solid #008080;
+      // outline: 2px solid #006767;
+      outline-offset: 1px;
+      outline-color: #005555;
     }
+
+    button {
+      padding: 10px 50px;
+      font-size: 20px;
+      border: none;
+      outline: none;
+      background: #008080;
+      color: aliceblue;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  }
 }

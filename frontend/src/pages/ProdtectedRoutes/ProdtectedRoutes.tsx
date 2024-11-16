@@ -4,7 +4,7 @@ import { selecteduserInfo } from "../../app/features/useInfoSlice";
 
 const ProdtectedRoutes = () => {
   const userInfo = useAppSelector(selecteduserInfo);
-  return <div>{!userInfo ? <Outlet /> : <>NONONO</>}</div>;
+  return <div>{userInfo ? <Outlet /> : <>NONONO</>}</div>;
 };
 
 export default ProdtectedRoutes;

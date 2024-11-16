@@ -4,7 +4,7 @@ import { useState } from "react";
 import "./editProducts.scss";
 
 const EditProducts = () => {
-  const [category, setCategory] = useState();
+  const [category, setCategory] = useState("");
   const { data, isLoading, isFetching } = useGetAllCategoryQuery();
   const [addNewCategory] = useAddNewCategoryMutation();
   const [deleteCategory] = useDeleteCategoryMutation();
@@ -15,6 +15,7 @@ const EditProducts = () => {
     e.preventDefault();
     try {
       await addNewCategory({ name: category }).unwrap();
+      setCategory("");
     } catch (error) {
       console.log(error);
     }
@@ -29,9 +30,6 @@ const EditProducts = () => {
     }
   };
 
-
-  const fakeData = ["text", "text2", 'text4', "text", "text2", 'text4', "text", "text2", 'text4', "text", "text2", "text2",]
-
   return (
     <div className="edit__box">
       <div className="container">
@@ -39,8 +37,13 @@ const EditProducts = () => {
           <>Loding...222</>
         ) : (
           <>
-            {fakeData?.map((item) => (
-              <button className="edit__button"><span>{item}</span> <span><BiTrash /></span></button>
+            {data?.map((item) => (
+              <button className="edit__button" key={item._id}>
+                <span>{item.name}</span>
+                <span onClick={() => handleDeleteCategory(item._id)}>
+                  <BiTrash />
+                </span>
+              </button>
             ))}
             {isFetching && <>Loding...</>}
           </>
@@ -48,7 +51,7 @@ const EditProducts = () => {
       </div>
       <form onSubmit={handleSubmit}>
         <label htmlFor="">Add New Category</label>
-        <input type="text" onChange={(e) => setCategory(e.target.value)} />
+        <input type="text" value={category} onChange={(e) => setCategory(e.target.value)} />
         <button type="submit">Sumbit</button>
       </form>
     </div>
