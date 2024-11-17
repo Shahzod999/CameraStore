@@ -1,6 +1,7 @@
 import CardBox from "./CardBox";
 import Header from "../header/Header";
 import Brand from "../brand/Brand";
+import { useFetchAllProductsQuery } from "../../app/api/productsApiSlice";
 const card = () => {
   const product = [
     {
@@ -88,6 +89,9 @@ const card = () => {
       image: "17.png",
     },
   ];
+
+  const { data } = useFetchAllProductsQuery({});
+  console.log(data);
 
   return (
     <>

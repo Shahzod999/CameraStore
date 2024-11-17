@@ -12,7 +12,7 @@ const Category = ({ category, setCategory }) => {
             <>Loading...</>
           ) : (
             data?.map((item) => (
-              <div className="category__brand-div">
+              <div className="category__brand-div" key={item._id}>
                 <h1 className="category__title">{item.name}</h1>
                 <ul className="category__list">
                   <li className="category__item">
