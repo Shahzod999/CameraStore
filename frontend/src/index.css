@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Pacifico&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Pacifico&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -27,26 +27,33 @@
   background: #00b6b6;
 }
 
-
-a{
+a {
   text-decoration: none !important;
 }
 
-a:hover{
+a:hover {
   box-shadow: none;
 }
 
-ul{
+ul {
   list-style: none !important;
 }
 
-img{
+img {
   vertical-align: bottom;
 }
 
-.container{
+.container {
   max-width: 1300px;
   width: 100%;
   padding: 15px 0px;
   margin: 0 auto;
+}
+
+.errorText {
+  color: red;
+}
+button:disabled {
+  cursor: not-allowed;
+  fill: blur(1px);
 }

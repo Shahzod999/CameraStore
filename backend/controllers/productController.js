@@ -3,7 +3,7 @@ import Product from "../models/productsModel.js";
 
 const addProduct = asyncHandler(async (req, res) => {
   try {
-    const { name, description, price, category, quantity, brand } = req.body;
+    const { name, description, price, category, quantity, brand, image } = req.fields;
 
     switch (true) {
       case !name:
@@ -18,6 +18,8 @@ const addProduct = asyncHandler(async (req, res) => {
         return res.json({ error: "Quantity is required" });
       case !brand:
         return res.json({ error: "Brand is required" });
+      case !image:
+        return res.json({ error: "Image is required" });
     }
 
     const existingProduct = await Product.findOne({ name, brand });
@@ -26,7 +28,7 @@ const addProduct = asyncHandler(async (req, res) => {
       return res.status(409).json("Product with this name and brand already exists");
     }
 
-    const product = new Product({ ...req.body });
+    const product = new Product({ ...req.fields });
     await product.save();
     res.json(product);
   } catch (error) {

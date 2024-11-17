@@ -1,12 +1,20 @@
 import { useState } from "react";
 import "./addnew.scss";
 import { useGetAllCategoryQuery } from "../../app/api/categoryApiSlice";
+import { useForm } from "react-hook-form";
+import { useAddNewProductMutation } from "../../app/api/productsApiSlice";
 
 const Addnew = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [choosenCategory, setChoosenCategory] = useState("");
   const [commonError, setCommonError] = useState("");
   const [imagePreview, setImagePreview] = useState<string>("");
   const { data: category, isLoading, isFetching } = useGetAllCategoryQuery();
+  const [addNewProduct, { data, isLoading: addDataLoading }] = useAddNewProductMutation();
 
   const handleImagePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCommonError("");
@@ -29,10 +37,27 @@ const Addnew = () => {
     }
   };
 
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("description", data.description);
+    formData.append("price", data.price);
+    formData.append("category", choosenCategory);
+    formData.append("quantity", data.quantity);
+    formData.append("brand", data.brand);
+    formData.append("image", imagePreview);
+
+    if (!imagePreview) {
+      return setCommonError("ImageRequired");
+    }
+    let res = await addNewProduct(formData).unwrap();
+    console.log(res);
+  };
+
   return (
     <div className="add-product">
       <h1>Add New Product</h1>
-      <div className="form-container">
+      <form onSubmit={handleSubmit(onSubmit)} className="form-container">
         <div className="form-image">
           <label>Upload Image</label>
           <input
@@ -47,15 +72,18 @@ const Addnew = () => {
         <div className="product-form">
           <div className="form-group">
             <label>Title</label>
-            <input type="text" placeholder="Product Title" />
+            <input type="text" placeholder="Product Title" {...register("name", { required: "Name Required" })} />
+            <span className="errorText">{errors.name?.message}</span>
           </div>
           <div className="form-group">
             <label>Description</label>
-            <textarea placeholder="Product Description" />
+            <textarea placeholder="Product Description" {...register("description", { required: "Description Required" })} />
           </div>
+          <span className="errorText">{errors.description?.message}</span>
           <div className="form-group">
             <label>Price</label>
-            <input type="number" placeholder="Price" />
+            <input type="number" placeholder="Price" {...register("price", { required: "Price Required" })} />
+            <span className="errorText">{errors.price?.message}</span>
           </div>
           <div className="form-group">
             <label>Category</label>
@@ -74,16 +102,20 @@ const Addnew = () => {
           </div>
           <div className="form-group">
             <label>Brand</label>
-            <input type="text" placeholder="Brand" />
+            <input type="text" placeholder="Brand" {...register("brand", { required: "Brand Required" })} />
+            <span className="errorText">{errors.brand?.message}</span>
           </div>
           <div className="form-group">
             <label>Quantity</label>
-            <input type="number" placeholder="1, 2, 3..." />
+            <input type="number" placeholder="1, 2, 3..." {...register("quantity", { required: "Quantity Required" })} />
+            <span className="errorText">{errors.quantity?.message}</span>
           </div>
-          <div>{commonError}</div>
-          <button className="submit-button">Confirm</button>
+          <span className="errorText">{commonError}</span>
+          <button className="submit-button" disabled={addDataLoading}>
+            Confirm
+          </button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
