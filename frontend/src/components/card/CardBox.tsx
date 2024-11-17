@@ -35,17 +35,26 @@ const CardBox = ({ item }) => {
     setEdit(!edit);
   };
 
+
   const handleSave = async () => {
     try {
-      const updatedProduct = { ...product, category: choosenCategory || category._id };
+      const formData = new FormData();
+      formData.append("name", product.name);
+      formData.append("description", product.description);
+      formData.append("brand", product.brand);
+      formData.append("price", product.price);
+      formData.append("quantity", product.quantity);
+      formData.append("category", choosenCategory);
+      formData.append("image", newImage);
 
-      console.log(updatedProduct);
+      let res = await updateProduct({ _id, data: formData }).unwrap();
+      console.log(res);
 
-      await updateProduct({ _id, ...updatedProduct }).unwrap();
       setEdit(false);
       alert("Product updated successfully!");
     } catch (error) {
-      console.log(error);
+      setCommonError("Failed to update product.");
+      console.error(error);
     }
   };
 
@@ -110,10 +119,10 @@ const CardBox = ({ item }) => {
         <input type="text" name="brand" value={brand} className="cardbox__txt" readOnly={!edit} onChange={handleEditChange} />
 
         {edit ? (
-          <select value={choosenCategory._id} onChange={(e) => setChoosenCategory(e.target.value)} className="cardbox__select">
-            {categoryState?.map((item) => (
-              <option key={item._id} value={item._id}>
-                {item.name}
+          <select value={choosenCategory} onChange={(e) => setChoosenCategory(e.target.value)} className="cardbox__select">
+            {categoryState?.map((category) => (
+              <option key={category._id} value={category._id}>
+                {category.name}
               </option>
             ))}
           </select>

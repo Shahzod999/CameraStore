@@ -39,8 +39,7 @@ const addProduct = asyncHandler(async (req, res) => {
 
 const updateProductDetails = asyncHandler(async (req, res) => {
   try {
-    const product = await Product.findByIdAndUpdate(req.params.id, { ...req.body }, { new: true, runValidators: true });
-
+    const product = await Product.findByIdAndUpdate(req.params.id, { ...req.fields }, { new: true, runValidators: true });
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
