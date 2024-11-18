@@ -1,9 +1,14 @@
 import CardBox from "./CardBox";
 import Header from "../header/Header";
 import Brand from "../brand/Brand";
-import { useFetchAllProductsQuery } from "../../app/api/productsApiSlice";
+import { useFetchAllProductsQuery, useSearchProductsQuery } from "../../app/api/productsApiSlice";
+import { useState } from "react";
 const card = () => {
+  const [searchTerm, setSearchTerm] = useState("");
   const { data: product } = useFetchAllProductsQuery({});
+  const { data } = useSearchProductsQuery("Web");
+
+  console.log(data, "111e");
 
   // const product = [
   //   {
@@ -92,7 +97,6 @@ const card = () => {
   //   },
   // ];
 
-  console.log(product);
 
   return (
     <>

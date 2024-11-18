@@ -42,6 +42,52 @@
   padding-bottom: 20px;
   position: relative;
   overflow: hidden;
+  textarea,
+  input {
+    border: none;
+    padding: 5px 10px;
+    text-overflow: ellipsis;
+    &:read-only {
+      outline: none;
+      pointer-events: none;
+      resize: none;
+    }
+  }
+  select,
+  span {
+    padding: 5px 10px;
+  }
+  .changeImageHolder {
+    position: relative;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    overflow: hidden;
+    a{
+      user-select: none;
+    }
+    .actionButtons {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      position: absolute;
+      bottom: 5px;
+      z-index: 99;
+      padding: 0 10px;
+    }
+    label {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      backdrop-filter: blur(2px);
+      background-color: rgba(0, 0, 0, 0.2);
+      display: grid;
+      place-items: center;
+      color: white;
+    }
+  }
 }
 .cardBox {
   .loading {

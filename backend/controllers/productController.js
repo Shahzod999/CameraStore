@@ -39,7 +39,7 @@ const addProduct = asyncHandler(async (req, res) => {
 
 const updateProductDetails = asyncHandler(async (req, res) => {
   try {
-    const product = await Product.findByIdAndUpdate(req.params.id, { ...req.fields }, { new: true, runValidators: true });
+    const product = await Product.findByIdAndUpdate(req.params.id, { ...req.body }, { new: true, runValidators: true });
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
@@ -79,8 +79,25 @@ const fetchProductById = asyncHandler(async (req, res) => {
 
 const fetchAllproducts = asyncHandler(async (req, res) => {
   try {
-    const products = await Product.find({}).populate("category").limit(12).sort({ createdAt: -1 });
+    const products = await Product.find({}).populate("category").sort({ createdAt: -1 });
     res.json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server Error" });
+  }
+});
+
+const searchProducts = asyncHandler(async (req, res) => {
+  const { name } = req.query;
+
+  if (!name) {
+    res.status(404).json({ error: "Not found" });
+    return;
+  }
+
+  try {
+    const products = await Product.find({ name: { $regex: name, $options: "i" } });
+    res.status(200).json(products);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server Error" });
@@ -103,4 +120,4 @@ const filterProducts = asyncHandler(async (req, res) => {
   }
 });
 
-export { addProduct, updateProductDetails, removeProduct, fetchProductById, fetchAllproducts, filterProducts };
+export { addProduct, updateProductDetails, removeProduct, fetchProductById, fetchAllproducts, filterProducts, searchProducts };

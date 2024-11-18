@@ -6,19 +6,21 @@ import { MdFavoriteBorder } from "react-icons/md";
 import { MdShoppingCart } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { VscClearAll } from "react-icons/vsc";
+import { IoMdImages } from "react-icons/io";
 import { useDeleteProductsMutation, useUpdateProductMutation } from "../../app/api/productsApiSlice";
 import { useGetAllCategoryQuery } from "../../app/api/categoryApiSlice";
 
 const CardBox = ({ item }) => {
   const [product, setProduct] = useState(item);
   const { _id, name, description, brand, price, image, category, quantity } = product;
+
   const { data: categoryState } = useGetAllCategoryQuery();
   const [deleteProducts, { isLoading: deleteLoading }] = useDeleteProductsMutation();
   const [updateProduct, { isLoading: updateLoading }] = useUpdateProductMutation();
   const [newImage, setNewImage] = useState(image);
   const [commonError, setCommonError] = useState("");
   const [edit, setEdit] = useState(false);
-  const [choosenCategory, setChoosenCategory] = useState(category || "");
+  const [choosenCategory, setChoosenCategory] = useState(category._id || "");
 
   const handleDelete = async () => {
     const check = confirm("Rostan Uchiremi?");
@@ -35,21 +37,11 @@ const CardBox = ({ item }) => {
     setEdit(!edit);
   };
 
-
   const handleSave = async () => {
     try {
-      const formData = new FormData();
-      formData.append("name", product.name);
-      formData.append("description", product.description);
-      formData.append("brand", product.brand);
-      formData.append("price", product.price);
-      formData.append("quantity", product.quantity);
-      formData.append("category", choosenCategory);
-      formData.append("image", newImage);
-
-      let res = await updateProduct({ _id, data: formData }).unwrap();
+      let newProduct = { ...product, category: choosenCategory, image: newImage };
+      let res = await updateProduct({ id: _id, data: newProduct }).unwrap();
       console.log(res);
-
       setEdit(false);
       alert("Product updated successfully!");
     } catch (error) {
@@ -79,8 +71,9 @@ const CardBox = ({ item }) => {
     }
   };
 
-  const handleEditChange = (e) => {
+  const handleEditChange = (e: React.ChangeEvent<HTMLTextAreaElement> | React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
     setProduct((prev) => ({
       ...prev,
       [name]: name === "price" || name === "quantity" ? Number(value) : value,
@@ -96,21 +89,32 @@ const CardBox = ({ item }) => {
   return (
     <div className="cardBox">
       <div className={`cardBox__div ${updateLoading || deleteLoading ? "loading" : ""}`}>
-        <div>
-          {edit ? <VscClearAll onClick={handleEditClear} size={25} /> : <FaPencilAlt onClick={handleEdit} size={25} />}
-          <BiTrash onClick={handleDelete} size={25} />
-        </div>
+        <div className="changeImageHolder">
+          <div className="actionButtons">
+            {edit ? <VscClearAll onClick={handleEditClear} size={25} /> : <FaPencilAlt onClick={handleEdit} size={25} />}
+            <BiTrash onClick={handleDelete} size={25} />
+          </div>
 
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => {
-            handleImagePreview(e);
-          }}
-        />
-        <Link className="cardbox__Link" to="/1">
-          <img src={newImage} alt={name} className="cardBox__img" />
-        </Link>
+          {edit && (
+            <>
+              <label htmlFor="image">
+                <IoMdImages size={55} />
+              </label>
+              <input
+                id="image"
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={(e) => {
+                  handleImagePreview(e);
+                }}
+              />
+            </>
+          )}
+          <Link className="cardbox__Link" to="/1">
+            <img src={newImage} alt={name} className="cardBox__img" />
+          </Link>
+        </div>
 
         <input type="text" name="name" value={name} className="cardBox__title" readOnly={!edit} onChange={handleEditChange} />
 
@@ -119,15 +123,15 @@ const CardBox = ({ item }) => {
         <input type="text" name="brand" value={brand} className="cardbox__txt" readOnly={!edit} onChange={handleEditChange} />
 
         {edit ? (
-          <select value={choosenCategory} onChange={(e) => setChoosenCategory(e.target.value)} className="cardbox__select">
-            {categoryState?.map((category) => (
-              <option key={category._id} value={category._id}>
-                {category.name}
+          <select onChange={(e) => setChoosenCategory(e.target.value)} className="cardbox__select">
+            {categoryState?.map((item) => (
+              <option key={item._id} value={item._id}>
+                {item.name}
               </option>
             ))}
           </select>
         ) : (
-          <span className="cardbox__txt">{choosenCategory.name}</span>
+          <span className="cardbox__txt">{category.name}</span>
         )}
 
         <input type="number" name="quantity" value={quantity} className="cardbox__input" readOnly={!edit} onChange={handleEditChange} />
