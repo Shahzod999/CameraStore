@@ -3,12 +3,13 @@ import Header from "../header/Header";
 import Brand from "../brand/Brand";
 import { useFetchAllProductsQuery, useSearchProductsQuery } from "../../app/api/productsApiSlice";
 import { useState } from "react";
+import { useAppSelector } from "../../app/hooks/hooks";
+import { selectedSearchParams } from "../../app/features/searchSlice";
 const card = () => {
-  const [searchTerm, setSearchTerm] = useState("");
   const { data: product } = useFetchAllProductsQuery({});
-  const { data } = useSearchProductsQuery("Web");
+  const searchParams = useAppSelector(selectedSearchParams);
+  const { data: searchdata, isFetching } = useSearchProductsQuery(searchParams);
 
-  console.log(data, "111e");
 
   // const product = [
   //   {
@@ -97,12 +98,12 @@ const card = () => {
   //   },
   // ];
 
-
   return (
     <>
       <Header />
       <div className="card">
         <div className="container">
+          <div className="card__box">{isFetching ? <>Loading...</> : searchdata?.map((item) => <CardBox item={item} key={item._id} />)}</div>
           <div className="card__box">
             {product?.map((item) => (
               <CardBox item={item} key={item._id} />

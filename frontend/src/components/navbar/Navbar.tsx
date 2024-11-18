@@ -15,9 +15,12 @@ import Category from "../category/Category";
 import { useAppDispatch, useAppSelector } from "../../app/hooks/hooks";
 import { logOutState, selecteduserInfo } from "../../app/features/useInfoSlice";
 import { useLogOutMutation } from "../../app/api/userApiSlice";
+import { searchProducts } from "../../app/features/searchSlice";
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
+  const [category, setCategory] = useState(false);
+  const [searchParam, setSearchParam] = useState("");
   const userInfo = useAppSelector(selecteduserInfo);
   const [logOut] = useLogOutMutation();
 
@@ -30,7 +33,10 @@ const Navbar = () => {
     }
   };
 
-  const [category, setCategory] = useState(false);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchParam(e.target.value);
+    dispatch(searchProducts(searchParam));
+  };
 
   return (
     <>
@@ -54,7 +60,7 @@ const Navbar = () => {
               <GiHamburgerMenu /> Category
             </span>
             <form className="navbar__form" action="">
-              <input type="text" placeholder="Search" className="navbar__input" />
+              <input onChange={handleChange} type="text" placeholder="Search" className="navbar__input" />
               <Link to="" className="navbar__form-logo">
                 <IoSearch />
               </Link>
