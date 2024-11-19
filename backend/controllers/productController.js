@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import asyncHandler from "../middleware/asyncHandler.js";
 import Product from "../models/productsModel.js";
 
@@ -64,7 +65,7 @@ const removeProduct = asyncHandler(async (req, res) => {
 
 const fetchProductById = asyncHandler(async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id).populate("category");
     if (product) {
       return res.json(product);
     } else {
@@ -120,4 +121,22 @@ const filterProducts = asyncHandler(async (req, res) => {
   }
 });
 
-export { addProduct, updateProductDetails, removeProduct, fetchProductById, fetchAllproducts, filterProducts, searchProducts };
+const fetchBasketProducts = asyncHandler(async (req, res) => {
+  try {
+    const { ids } = req.body;
+
+    if (!ids || !Array.isArray(ids) || ids.length == 0) {
+      return res.status(400).json({ error: "No product IDs provided" });
+    }
+
+    const objectIds = ids.map((id) => new mongoose.Types.ObjectId(id));
+
+    const products = await Product.find({ _id: { $in: objectIds } });
+    res.json(products);
+  } catch (error) {
+    console.error("Ошибка при получении продуктов:", error);
+    res.status(500).json({ error: "Server Error" });
+  }
+});
+
+export { addProduct, updateProductDetails, removeProduct, fetchProductById, fetchAllproducts, filterProducts, searchProducts, fetchBasketProducts };

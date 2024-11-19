@@ -16,6 +16,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks/hooks";
 import { logOutState, selecteduserInfo } from "../../app/features/useInfoSlice";
 import { useLogOutMutation } from "../../app/api/userApiSlice";
 import { searchProducts } from "../../app/features/searchSlice";
+import { useDebounce } from "../../app/hooks/debounce";
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
@@ -35,8 +36,10 @@ const Navbar = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchParam(e.target.value);
-    dispatch(searchProducts(searchParam));
+    // dispatch(searchProducts(searchParam));
   };
+
+  const debounce = useDebounce(searchParam);
 
   return (
     <>
@@ -87,16 +90,20 @@ const Navbar = () => {
                   </Link>
                 )}
               </li>
-              <li className="navbar__item">
-                <Link to="/admin" className="navbar__link-icon add">
-                  <MdOutlineAddBusiness />
-                </Link>
-              </li>
-              <li className="navbar__item">
-                <Link to="/admin/edit" className="navbar__link-icon edit">
-                  <GrEdit />
-                </Link>
-              </li>
+              {userInfo && (
+                <>
+                  <li className="navbar__item">
+                    <Link to="/admin" className="navbar__link-icon add">
+                      <MdOutlineAddBusiness />
+                    </Link>
+                  </li>
+                  <li className="navbar__item">
+                    <Link to="/admin/edit" className="navbar__link-icon edit">
+                      <GrEdit />
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>

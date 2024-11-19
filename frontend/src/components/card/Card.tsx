@@ -2,14 +2,15 @@ import CardBox from "./CardBox";
 import Header from "../header/Header";
 import Brand from "../brand/Brand";
 import { useFetchAllProductsQuery, useSearchProductsQuery } from "../../app/api/productsApiSlice";
-import { useState } from "react";
 import { useAppSelector } from "../../app/hooks/hooks";
 import { selectedSearchParams } from "../../app/features/searchSlice";
+
 const card = () => {
   const { data: product } = useFetchAllProductsQuery({});
   const searchParams = useAppSelector(selectedSearchParams);
-  const { data: searchdata, isFetching } = useSearchProductsQuery(searchParams);
-
+  const { data: searchdata, isFetching } = useSearchProductsQuery(searchParams, {
+    skip: searchParams.length < 2,
+  });
 
   // const product = [
   //   {
@@ -97,6 +98,10 @@ const card = () => {
   //     image: "17.png",
   //   },
   // ];
+
+  console.log(searchdata);
+
+  console.log(product);
 
   return (
     <>

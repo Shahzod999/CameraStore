@@ -9,8 +9,11 @@ import { VscClearAll } from "react-icons/vsc";
 import { IoMdImages } from "react-icons/io";
 import { useDeleteProductsMutation, useUpdateProductMutation } from "../../app/api/productsApiSlice";
 import { useGetAllCategoryQuery } from "../../app/api/categoryApiSlice";
+import { useAppDispatch } from "../../app/hooks/hooks";
+import { addProductsToBasket } from "../../app/features/basketSlice";
 
 const CardBox = ({ item }) => {
+  const dispatch = useAppDispatch();
   const [product, setProduct] = useState(item);
   const { _id, name, description, brand, price, image, category, quantity } = product;
 
@@ -86,6 +89,9 @@ const CardBox = ({ item }) => {
     setEdit(false);
   };
 
+  const handleAddToBasket = () => {
+    dispatch(addProductsToBasket(item._id));
+  };
   return (
     <div className="cardBox">
       <div className={`cardBox__div ${updateLoading || deleteLoading ? "loading" : ""}`}>
@@ -111,7 +117,7 @@ const CardBox = ({ item }) => {
               />
             </>
           )}
-          <Link className="cardbox__Link" to="/1">
+          <Link className="cardbox__Link" to={`/${item._id}`}>
             <img src={newImage} alt={name} className="cardBox__img" />
           </Link>
         </div>
@@ -145,7 +151,7 @@ const CardBox = ({ item }) => {
             <MdFavoriteBorder />
           </a>
         </div>
-        <button className="cardbox__link" onClick={edit ? handleSave : undefined}>
+        <button className="cardbox__link" onClick={edit ? handleSave : handleAddToBasket}>
           {edit ? "Save" : "Add to Basket"}
 
           <span className="cardbox__span">

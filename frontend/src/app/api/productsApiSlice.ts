@@ -34,8 +34,17 @@ export const productApiSlice = apiSlice.injectEndpoints({
         url: `/products/${id}`
       })
     }),
+    getBasket: builder.query({
+      query: (ids) => ({
+        url: "/products/getBasket",
+        method: "POST",
+        body: ids
+      }),
+      keepUnusedDataFor: 1,
+      providesTags: ["Products"]
+    }),
     searchProducts: builder.query({
-      query: (name = "") => ({
+      query: (name) => ({
         url: '/products/search',
         params: { name },
       })
@@ -43,4 +52,4 @@ export const productApiSlice = apiSlice.injectEndpoints({
   })
 })
 
-export const { useFetchAllProductsQuery, useAddNewProductMutation, useDeleteProductsMutation, useUpdateProductMutation, useGetSingleProductQuery, useSearchProductsQuery } = productApiSlice
+export const { useFetchAllProductsQuery, useAddNewProductMutation, useDeleteProductsMutation, useUpdateProductMutation, useGetSingleProductQuery, useGetBasketQuery, useSearchProductsQuery } = productApiSlice
