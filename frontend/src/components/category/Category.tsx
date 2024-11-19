@@ -1,4 +1,5 @@
 import { useGetAllCategoryQuery } from "../../app/api/categoryApiSlice";
+import Loading from "../loading/Loading";
 import "./category.scss";
 
 const Category = ({ category, setCategory }) => {
@@ -9,7 +10,7 @@ const Category = ({ category, setCategory }) => {
       <div className={`${category ? "activeCategory" : ""} category`}>
         <div className="category__box">
           {isLoading || isFetching ? (
-            <>Loading...</>
+            <Loading/>
           ) : (
             data?.map((item) => (
               <div className="category__brand-div" key={item._id}>

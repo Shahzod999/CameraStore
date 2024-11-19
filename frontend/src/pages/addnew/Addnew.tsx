@@ -3,6 +3,7 @@ import "./addnew.scss";
 import { useGetAllCategoryQuery } from "../../app/api/categoryApiSlice";
 import { useForm } from "react-hook-form";
 import { useAddNewProductMutation } from "../../app/api/productsApiSlice";
+import Loading from "../../components/loading/Loading";
 
 const Addnew = () => {
   const {
@@ -90,7 +91,7 @@ const Addnew = () => {
             <select onChange={(e) => setChoosenCategory(e.target.value)}>
               {(isFetching || isLoading) && (
                 <option value="">
-                  <>Loading...</>
+                  <Loading/>
                 </option>
               )}
               {category?.map((item) => (

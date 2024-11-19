@@ -74,11 +74,11 @@ const Navbar = () => {
                   <FiShoppingCart />
                 </Link>
               </li>
-              <li className="navbar__item">
+              {/* <li className="navbar__item">
                 <Link to="" className="navbar__link-icon like">
                   <MdFavoriteBorder />
                 </Link>
-              </li>
+              </li> */}
               <li className="navbar__item">
                 {userInfo ? (
                   <span className="navbar__link-icon logOut" onClick={handleLogOut}>

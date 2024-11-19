@@ -20,7 +20,7 @@ export const basketSlice = createSlice({
       if (productExist) {
         return alert("Product Exist");
       }
-      
+
       state.basket.push(action.payload)
       localStorage.setItem("basket", JSON.stringify(state.basket))
       console.log('nonnne');

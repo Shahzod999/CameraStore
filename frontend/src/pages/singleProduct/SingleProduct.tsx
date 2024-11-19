@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { useGetSingleProductQuery } from "../../app/api/productsApiSlice";
 import { useParams } from "react-router-dom";
+import Loading from "../../components/loading/Loading";
 
 const SingleProduct = () => {
   const { id } = useParams();
@@ -17,7 +18,7 @@ const SingleProduct = () => {
   // data.updatedAt
   // data.image
   // data.category
-  if (isLoading) return <>Loading...</>;
+  if (isLoading) return <Loading/>;
   return (
     <div className="product">
       <div className="container">
@@ -35,7 +36,7 @@ const SingleProduct = () => {
             <h1 className="product__title">{data.name}</h1>
             <p className="product__text">{data.description}</p>
             <p className="product__price">{data.price} сум</p>
-            <p className="product__text">{data.category.name} Категория</p>
+            <p className="product__text">{data?.category?.name} Категория</p>
             <span className="product__link">Get Information</span>
             <div className="product__link-box">
               <span className="product__add-link">

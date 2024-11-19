@@ -4,6 +4,7 @@ import Brand from "../brand/Brand";
 import { useFetchAllProductsQuery, useSearchProductsQuery } from "../../app/api/productsApiSlice";
 import { useAppSelector } from "../../app/hooks/hooks";
 import { selectedSearchParams } from "../../app/features/searchSlice";
+import Loading from "../loading/Loading";
 
 const card = () => {
   const { data: product } = useFetchAllProductsQuery({});
@@ -108,7 +109,7 @@ const card = () => {
       <Header />
       <div className="card">
         <div className="container">
-          <div className="card__box">{isFetching ? <>Loading...</> : searchdata?.map((item) => <CardBox item={item} key={item._id} />)}</div>
+          <div className="card__box">{isFetching ? <Loading/> : searchdata?.map((item) => <CardBox item={item} key={item._id} />)}</div>
           <div className="card__box">
             {product?.map((item) => (
               <CardBox item={item} key={item._id} />

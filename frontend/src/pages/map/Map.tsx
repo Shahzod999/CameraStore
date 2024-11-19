@@ -6,9 +6,8 @@ const Map = () => {
         width="600"
         height="450"
         style={{ border: "none", width: "100%", height: "100vh" }}
-        allowfullscreen=""
         loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"></iframe>
+        referrerPolicy="no-referrer-when-downgrade"></iframe>
     </div>
   );
 };

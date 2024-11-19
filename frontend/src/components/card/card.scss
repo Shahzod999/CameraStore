@@ -36,10 +36,10 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 20px;
+  padding-top: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 10px;
   position: relative;
   overflow: hidden;
   textarea,
@@ -69,11 +69,15 @@
     .actionButtons {
       display: flex;
       justify-content: space-between;
+      column-gap: 10px;
       width: 100%;
+      height: fit-content;
       position: absolute;
       bottom: 5px;
+      top: 0;
       z-index: 99;
-      padding: 0 10px;
+      padding: 0 5px;
+      color: #008080;
     }
     label {
       position: absolute;
@@ -113,7 +117,7 @@
 }
 
 .cardbox__price-div {
-  margin-top: 20px;
+  margin-top: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -121,14 +125,13 @@
 
 .cardBox__title {
   font-size: 24px;
-  margin-top: 15px;
+  // margin-top: 15px;
 }
 
 .cardbox__txt {
   color: #d2d2d2;
   font-size: 17px;
   margin-top: 5px;
-
   & span {
     color: #a0a0a0;
     font-weight: 500;
@@ -139,7 +142,7 @@
   width: 100%;
   height: 2px;
   background: #008080;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .cardbox__price {
@@ -157,7 +160,13 @@
   font-size: 15px;
   color: #a9a9a9;
   margin-top: 10px;
-  margin-bottom: 10px;
+  width: 100%;
+  height: 100px;
+}
+
+.cardbox__input {
+  font-size: 20px;
+  margin-top: 10px;
 }
 
 .cardbox__link {
@@ -186,9 +195,12 @@
   right: -41px;
   font-size: 18px;
   position: absolute;
+  display: grid;
+  align-content: center;
   padding: 14.5px 12px;
   border-radius: 0 11px 11px 0;
   top: 0;
+  bottom: 0;
   background: #00a8a8;
   transition: 0.3s;
 }

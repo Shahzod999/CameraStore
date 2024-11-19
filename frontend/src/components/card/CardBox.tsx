@@ -4,15 +4,18 @@ import { FaPencilAlt } from "react-icons/fa";
 import "./card.scss";
 import { MdFavoriteBorder } from "react-icons/md";
 import { MdShoppingCart } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { VscClearAll } from "react-icons/vsc";
 import { IoMdImages } from "react-icons/io";
 import { useDeleteProductsMutation, useUpdateProductMutation } from "../../app/api/productsApiSlice";
 import { useGetAllCategoryQuery } from "../../app/api/categoryApiSlice";
 import { useAppDispatch } from "../../app/hooks/hooks";
-import { addProductsToBasket } from "../../app/features/basketSlice";
+import { addProductsToBasket, deleteFromBasket } from "../../app/features/basketSlice";
 
 const CardBox = ({ item }) => {
+  const { pathname } = useLocation()
+  console.log(pathname);
+
   const dispatch = useAppDispatch();
   const [product, setProduct] = useState(item);
   const { _id, name, description, brand, price, image, category, quantity } = product;
@@ -23,14 +26,14 @@ const CardBox = ({ item }) => {
   const [newImage, setNewImage] = useState(image);
   const [commonError, setCommonError] = useState("");
   const [edit, setEdit] = useState(false);
-  const [choosenCategory, setChoosenCategory] = useState(category._id || "");
+  const [choosenCategory, setChoosenCategory] = useState(category?._id || "");
 
   const handleDelete = async () => {
-    const check = confirm("Rostan Uchiremi?");
+    const check = confirm("Are you sure for delete this product?");
     if (!check) return;
     try {
       await deleteProducts(item._id).unwrap();
-      alert("Kara lekin uchirvordim");
+      alert("Product deleted");
     } catch (error) {
       console.log(error);
     }
@@ -92,13 +95,19 @@ const CardBox = ({ item }) => {
   const handleAddToBasket = () => {
     dispatch(addProductsToBasket(item._id));
   };
+  const handleDeleteFromBasket = () => {
+    dispatch(deleteFromBasket(item._id));
+    console.log('basleerwerF');
+  }
+
+
   return (
     <div className="cardBox">
       <div className={`cardBox__div ${updateLoading || deleteLoading ? "loading" : ""}`}>
         <div className="changeImageHolder">
           <div className="actionButtons">
-            {edit ? <VscClearAll onClick={handleEditClear} size={25} /> : <FaPencilAlt onClick={handleEdit} size={25} />}
-            <BiTrash onClick={handleDelete} size={25} />
+            {edit ? <VscClearAll className="actionClear" onClick={handleEditClear} size={25} /> : <FaPencilAlt className="actionTrash" onClick={handleEdit} size={25} />}
+            <BiTrash onClick={handleDelete} size={28} />
           </div>
 
           {edit && (
@@ -124,9 +133,9 @@ const CardBox = ({ item }) => {
 
         <input type="text" name="name" value={name} className="cardBox__title" readOnly={!edit} onChange={handleEditChange} />
 
-        <textarea rows={5} name="description" value={description} className="cardbox__text" readOnly={!edit} onChange={handleEditChange} />
+        <textarea rows={1} name="description" value={description} className="cardbox__text" readOnly={!edit} onChange={handleEditChange} />
 
-        <input type="text" name="brand" value={brand} className="cardbox__txt" readOnly={!edit} onChange={handleEditChange} />
+        {/* <input type="text" name="brand" value={brand} className="cardbox__txt" readOnly={!edit} onChange={handleEditChange} /> */}
 
         {edit ? (
           <select onChange={(e) => setChoosenCategory(e.target.value)} className="cardbox__select">
@@ -137,7 +146,7 @@ const CardBox = ({ item }) => {
             ))}
           </select>
         ) : (
-          <span className="cardbox__txt">{category.name}</span>
+          <span className="cardbox__txt">{category?.name}</span>
         )}
 
         <input type="number" name="quantity" value={quantity} className="cardbox__input" readOnly={!edit} onChange={handleEditChange} />
@@ -146,14 +155,9 @@ const CardBox = ({ item }) => {
 
         <div className="cardbox__price-div">
           <input type="number" name="price" step={1000} value={price} className="cardbox__price" readOnly={!edit} onChange={handleEditChange} />
-
-          <a href="" className="cardbox__fv">
-            <MdFavoriteBorder />
-          </a>
         </div>
-        <button className="cardbox__link" onClick={edit ? handleSave : handleAddToBasket}>
-          {edit ? "Save" : "Add to Basket"}
-
+        <button className="cardbox__link" onClick={edit ? handleSave : pathname == "/basket" ? handleDeleteFromBasket : handleAddToBasket}>
+          {edit ? "Save" : pathname == "/basket" ? "Delete" : "Add to Basket"}
           <span className="cardbox__span">
             <MdShoppingCart />
           </span>

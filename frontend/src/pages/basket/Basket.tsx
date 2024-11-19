@@ -2,6 +2,8 @@ import { useGetBasketQuery } from "../../app/api/productsApiSlice";
 import { deleteFromBasket, selectedBasket } from "../../app/features/basketSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks/hooks";
 import CardBox from "../../components/card/CardBox";
+import Loading from "../../components/loading/Loading";
+import "./basket.scss"
 
 const Basket = () => {
   const dispatch = useAppDispatch();
@@ -16,17 +18,18 @@ const Basket = () => {
   };
 
   if (error) return <p>Произошла ошибка при загрузке данных"</p>;
-  if (isLoading) return <>Loading...</>;
-  if (basket.length === 0) return <p>Корзина пуста</p>;
+  if (isLoading) return <Loading/>;
+  if (basket.length === 0) return <p>Basket is Empty</p>;
   return (
     <div className="card__box">
-      {isFetching && <>Loading...</>}
-      {data?.map((item) => (
-        <div className="basketCard" key={item._id}>
-          <CardBox item={item} />
-          <button onClick={() => handleDeleteFrombasket(item._id)}>Delete</button>
-        </div>
-      ))}
+      <div className="container">
+        {isFetching && <Loading/>}
+        {data?.map((item) => (
+          <div className="basketCard" key={item._id}>
+            <CardBox item={item} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
