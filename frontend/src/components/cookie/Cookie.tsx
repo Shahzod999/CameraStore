@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import "./cookie.scss";
 
 const Cookie = () => {
@@ -9,35 +9,35 @@ const Cookie = () => {
     setIsAnimating(true);
     setTimeout(() => {
       setIsVisible(false);
-    }, 300); 
+    }, 300);
   };
 
   const handleReject = () => {
     setIsAnimating(true);
     setTimeout(() => {
       setIsVisible(false);
-    }, 300); 
+    }, 300);
   };
 
   return (
     <>
       {isVisible && (
-        <div className={`cookie ${isAnimating ? 'animating' : ''}`}>
-          <div className="container">
+        <div className={`cookie ${isAnimating ? "animating" : ""}`}>
             <div className="cookie__box">
-              <p className="cookie__text">
-                We use cookies to enhance your experience on our site. Please select “Accept All” or “Reject” to continue.
-              </p>
+              <p className="cookie__text">We use cookies to enhance your experience on our site. Please select “Accept All” or “Reject” to continue.</p>
               <div className="cookie__buttons">
-                <button className="cookie__button accept" onClick={handleAccept}>Accept All</button>
-                <button className="cookie__button reject" onClick={handleReject}>Reject</button>
-              </div>
+                <button className="cookie__button accept" onClick={handleAccept}>
+                  Accept All
+                </button>
+                <button className="cookie__button reject" onClick={handleReject}>
+                  Reject
+                </button>
             </div>
           </div>
         </div>
       )}
     </>
   );
-}
+};
 
 export default Cookie;
