@@ -3,7 +3,7 @@ import { useAppDispatch } from './hooks';
 import { searchProducts } from '../features/searchSlice';
 
 
-export function useDebounce(value: string, delay: number = 3000): string {
+export function useDebounce(value: string, delay: number = 500): string {
   const [debounce, setDebounce] = useState(value)
   const dispatch = useAppDispatch();
 

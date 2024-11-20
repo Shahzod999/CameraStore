@@ -5,7 +5,6 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { IoSearch } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
-import { MdFavoriteBorder } from "react-icons/md";
 import { MdOutlineAddBusiness } from "react-icons/md";
 import { GrEdit } from "react-icons/gr";
 import { LuLogOut } from "react-icons/lu";
@@ -15,7 +14,6 @@ import Category from "../category/Category";
 import { useAppDispatch, useAppSelector } from "../../app/hooks/hooks";
 import { logOutState, selecteduserInfo } from "../../app/features/useInfoSlice";
 import { useLogOutMutation } from "../../app/api/userApiSlice";
-import { searchProducts } from "../../app/features/searchSlice";
 import { useDebounce } from "../../app/hooks/debounce";
 
 const Navbar = () => {
@@ -36,7 +34,6 @@ const Navbar = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchParam(e.target.value);
-    // dispatch(searchProducts(searchParam));
   };
 
   const debounce = useDebounce(searchParam);
