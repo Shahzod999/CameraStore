@@ -51,14 +51,17 @@ const Navbar = () => {
             </Link>
           </div>
         </div>
-        <div className="navbar__main-box">
-          <div className="container">
+        <div className="container">
+          <div className="navbar__main-box">
             <Link className="navbar__logo" to="/">
               WebCamera
             </Link>
-            <span className="navbar__category" onClick={() => setCategory(!category)}>
-              <GiHamburgerMenu /> Category
-            </span>
+            <div className="navbar__category" onClick={() => setCategory(!category)}>
+              <span>
+                <GiHamburgerMenu />
+              </span>
+              <span>Category</span>
+            </div>
             <form className="navbar__form" action="">
               <input onChange={handleChange} type="text" placeholder="Search" className="navbar__input" />
               <Link to="" className="navbar__form-logo">

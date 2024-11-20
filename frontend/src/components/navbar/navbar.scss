@@ -56,25 +56,24 @@
   }
 
   &__main-box {
-    .container {
-      display: flex;
-      align-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 25px;
+    gap: 30px;
+
+    @include media(1250) {
+      flex-wrap: wrap;
+      padding-left: 15px;
+      padding-right: 15px;
+      row-gap: 20px;
+      column-gap: 10px;
       justify-content: space-between;
-      padding-top: 25px;
+    }
 
-      @include media(1250) {
-        flex-wrap: wrap;
-        padding-left: 15px;
-        padding-right: 15px;
-        row-gap: 20px;
-        column-gap: 10px;
-        justify-content: space-between;
-      }
-
-      @include media(625) {
-        justify-content: center;
-        column-gap: 30px;
-      }
+    @include media(625) {
+      justify-content: center;
+      column-gap: 30px;
     }
   }
 
@@ -101,6 +100,10 @@
     overflow: hidden;
     cursor: pointer;
     box-shadow: 0 0 0px 1px #008080 inset;
+    span {
+      display: grid;
+      place-items: center;
+    }
 
     &::before {
       content: "";
@@ -139,7 +142,6 @@
 
   &__form {
     max-width: 500px;
-    width: 500px;
     height: fit-content;
     position: relative;
 

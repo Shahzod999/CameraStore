@@ -43,8 +43,8 @@ const Login = () => {
   );
 
   return (
-    <div className="login">
-      <div className="container">
+    <div className="container">
+      <div className="login">
         <div className={`login__first ${isSignUp ? "signup" : ""}`}>
           <h2 className="login__first-title">{isSignUp ? "Create Your New Account!" : "Welcome Back! Log in to Your Account:"}</h2>
           <a href="#" className="login__first-acc" onClick={toggleForm}>
@@ -60,16 +60,6 @@ const Login = () => {
         <div className={`login__sec ${isSignUp ? "signup" : ""}`}>
           <div className="login__title-div">
             <h2 className="login__sec-title">{isSignUp ? "Create Your Account:" : "Login to Your Account:"}</h2>
-            {!isSignUp && (
-              <div className="login__icon-box">
-                <a href="#" className="login__link-icon">
-                  <FaFacebook />
-                </a>
-                <a href="#" className="login__link-icon">
-                  <BsGoogle />
-                </a>
-              </div>
-            )}
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="login__form">
