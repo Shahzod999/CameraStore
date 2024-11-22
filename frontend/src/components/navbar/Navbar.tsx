@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import "./navbar.scss";
 import { IoLocationSharp } from "react-icons/io5";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -15,6 +15,8 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks/hooks";
 import { logOutState, selecteduserInfo } from "../../app/features/useInfoSlice";
 import { useLogOutMutation } from "../../app/api/userApiSlice";
 import { useDebounce } from "../../app/hooks/debounce";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
