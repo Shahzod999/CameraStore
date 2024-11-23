@@ -8,7 +8,7 @@
   bottom: 0;
   z-index: 999;
   display: grid;
-  // place-items: center;
+  place-items: center;
   width: 80%;
   margin: 0 auto;
 }
@@ -40,7 +40,7 @@
   z-index: 999;
   transform: translateY(-200%);
   transition: 0.5s ease-in-out;
-  padding: 0 3vw;
+  height: fit-content;
 
   &__brand-div {
   }
@@ -63,6 +63,11 @@
     font-size: 20px;
     font-weight: 500;
     color: #008080;
+    transition: 0.2s;
+    cursor: pointer;
+    &:hover {
+      color: #000;
+    }
     @include media(405) {
       font-size: 14px;
     }
@@ -81,16 +86,11 @@
   &__link {
     color: #666666;
     font-size: 16px;
-    transition: 0.2s;
     @include media(405) {
       font-size: 12px;
     }
     @include media(350) {
       font-size: 9px;
-    }
-
-    &:hover {
-      color: #000;
     }
   }
 }

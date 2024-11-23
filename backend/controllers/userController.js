@@ -29,9 +29,12 @@ const createUser = asyncHandler(async (req, res) => {
     await newUser.save();
     createToken(res, newUser._id);
 
+    delete newUser.password
     return res.status(201).json({
       _id: newUser._id,
+      // id: newUser._id,
       email: newUser.email,
+      // data: newUser
     });
   } catch (err) {
     return res.status(500).json({ message: "Server error, try again" });

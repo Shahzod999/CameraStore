@@ -131,7 +131,7 @@ const fetchBasketProducts = asyncHandler(async (req, res) => {
 
     const objectIds = ids.map((id) => new mongoose.Types.ObjectId(id));
 
-    const products = await Product.find({ _id: { $in: objectIds } });
+    const products = await Product.find({ _id: { $in: objectIds } }).populate("category");
     res.json(products);
   } catch (error) {
     console.error("Ошибка при получении продуктов:", error);

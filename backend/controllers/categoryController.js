@@ -11,11 +11,23 @@ const createCategory = asyncHandler(async (req, res) => {
     const existingCategory = await Category.findOne({ name });
 
     if (existingCategory) {
-      return res.json({ error: "Already exists" });
+      return res
+      .status(409)
+      .json({
+          ok: true,
+          status: "success", // error
+          error: "Already exists"
+        });
     }
 
     const category = await new Category({ name }).save();
     res.json(category);
+    // return res
+    // .status(200)
+    // .json({
+    //   ok: true,
+    //   data: category
+    // });
   } catch (error) {
     console.log(error);
     return res.status(400).json(error);

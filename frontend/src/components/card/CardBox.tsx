@@ -2,8 +2,7 @@ import { useState } from "react";
 import { BiTrash } from "react-icons/bi";
 import { FaPencilAlt } from "react-icons/fa";
 import "./card.scss";
-import { MdFavoriteBorder } from "react-icons/md";
-import { MdShoppingCart } from "react-icons/md";
+import { FcMoneyTransfer } from "react-icons/fc";
 import { Link, useLocation } from "react-router-dom";
 import { VscClearAll } from "react-icons/vsc";
 import { IoMdImages } from "react-icons/io";
@@ -11,12 +10,18 @@ import { useDeleteProductsMutation, useUpdateProductMutation } from "../../app/a
 import { useGetAllCategoryQuery } from "../../app/api/categoryApiSlice";
 import { useAppDispatch } from "../../app/hooks/hooks";
 import { addProductsToBasket, deleteFromBasket } from "../../app/features/basketSlice";
+import Button from "./Button";
+import { Product } from "../../app/types/ProductTypes";
 
-const CardBox = ({ item }) => {
-  const { pathname } = useLocation()
-  console.log(pathname);
+interface CardBoxProps {
+  item: Product;
+}
 
+const CardBox = ({ item }: CardBoxProps) => {
+  const { pathname } = useLocation();
+  const isBasketPage = pathname === "/basket";
   const dispatch = useAppDispatch();
+  const [originalProduct, setOriginalProduct] = useState(item);
   const [product, setProduct] = useState(item);
   const { _id, name, description, brand, price, image, category, quantity } = product;
 
@@ -26,7 +31,7 @@ const CardBox = ({ item }) => {
   const [newImage, setNewImage] = useState(image);
   const [commonError, setCommonError] = useState("");
   const [edit, setEdit] = useState(false);
-  const [choosenCategory, setChoosenCategory] = useState(category?._id || "");
+  const [choosenCategory, setChoosenCategory] = useState(item.category?._id || "");
 
   const handleDelete = async () => {
     const check = confirm("Are you sure for delete this product?");
@@ -43,11 +48,41 @@ const CardBox = ({ item }) => {
     setEdit(!edit);
   };
 
+  const getChangedFields = (original: Product, updated: Product) => {
+    const changes: Partial<typeof item> = {};
+
+    Object.keys(updated).forEach((key) => {
+      if ((original as any)[key] !== (updated as any)[key]) {
+        (changes as any)[key] = (updated as any)[key];
+      }
+    });
+
+    if (original.category?._id !== choosenCategory) {
+      changes.category = { _id: choosenCategory, name: "" } as Product["category"];
+    }
+
+    if (newImage !== original.image) {
+      changes.image = newImage;
+    }
+    return changes;
+  };
+
   const handleSave = async () => {
     try {
-      let newProduct = { ...product, category: choosenCategory, image: newImage };
-      let res = await updateProduct({ id: _id, data: newProduct }).unwrap();
+      const changedFields = getChangedFields(originalProduct, product);
+
+      if (Object.keys(changedFields).length === 0) {
+        alert("No changes to save.");
+        return;
+      }
+
+      const payload = { id: _id, data: changedFields };
+      console.log(payload);
+
+      let res = await updateProduct(payload).unwrap();
       console.log(res);
+
+      setOriginalProduct(product);
       setEdit(false);
       alert("Product updated successfully!");
     } catch (error) {
@@ -88,8 +123,10 @@ const CardBox = ({ item }) => {
 
   const handleEditClear = () => {
     setProduct(item);
-    setChoosenCategory(category || "");
+    setChoosenCategory(item.category._id || "");
     setEdit(false);
+    console.log(item);
+    console.log(choosenCategory);
   };
 
   const handleAddToBasket = () => {
@@ -97,9 +134,8 @@ const CardBox = ({ item }) => {
   };
   const handleDeleteFromBasket = () => {
     dispatch(deleteFromBasket(item._id));
-    console.log('basleerwerF');
-  }
-
+    console.log("basleerwerF");
+  };
 
   return (
     <div className="cardBox">
@@ -135,10 +171,10 @@ const CardBox = ({ item }) => {
 
         <textarea rows={1} name="description" value={description} className="cardbox__text" readOnly={!edit} onChange={handleEditChange} />
 
-        {/* <input type="text" name="brand" value={brand} className="cardbox__txt" readOnly={!edit} onChange={handleEditChange} /> */}
+        <input type="text" name="brand" value={brand} className="cardbox__txt" readOnly={!edit} onChange={handleEditChange} />
 
         {edit ? (
-          <select onChange={(e) => setChoosenCategory(e.target.value)} className="cardbox__select">
+          <select onChange={(e) => setChoosenCategory(e.target.value)} className="cardbox__select" value={choosenCategory}>
             {categoryState?.map((item) => (
               <option key={item._id} value={item._id}>
                 {item.name}
@@ -146,7 +182,7 @@ const CardBox = ({ item }) => {
             ))}
           </select>
         ) : (
-          <span className="cardbox__txt">{category?.name}</span>
+          <span className="cardbox__txt">{item.category.name}</span>
         )}
 
         <input type="number" name="quantity" value={quantity} className="cardbox__input" readOnly={!edit} onChange={handleEditChange} />
@@ -155,14 +191,12 @@ const CardBox = ({ item }) => {
 
         <div className="cardbox__price-div">
           <input type="number" name="price" step={1000} value={price} className="cardbox__price" readOnly={!edit} onChange={handleEditChange} />
+          <FcMoneyTransfer size={30} />
         </div>
-        <button className="cardbox__link" onClick={edit ? handleSave : pathname == "/basket" ? handleDeleteFromBasket : handleAddToBasket}>
-          {edit ? "Save" : pathname == "/basket" ? "Delete" : "Add to Basket"}
-          <span className="cardbox__span">
-            <MdShoppingCart />
-          </span>
-        </button>
-        <span className="errorText">{commonError}</span>
+
+        <Button edit={edit} isBasketPage={isBasketPage} handleSave={handleSave} handleDeleteFromBasket={handleDeleteFromBasket} handleAddToBasket={handleAddToBasket} />
+
+        {commonError && <span className="errorText">{commonError}</span>}
       </div>
     </div>
   );

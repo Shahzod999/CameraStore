@@ -3,10 +3,10 @@
 .card {
   &__box {
     display: flex;
-    align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
     row-gap: 50px;
+    padding-top: 30px;
 
     @include media(1300) {
       column-gap: 25px;
@@ -29,21 +29,18 @@
 
 .cardBox__div {
   width: 300px;
-  height: fit-content;
+  height: 100%;
   background: #ffffff;
   border-radius: 20px;
   box-shadow: 0 0 10px 10px #efefef;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: 15px;
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-bottom: 10px;
+  padding: 15px;
   position: relative;
-  overflow: hidden;
   textarea,
   input {
+    width: 100%;
     border: none;
     padding: 5px 10px;
     text-overflow: ellipsis;
@@ -59,11 +56,11 @@
   }
   .changeImageHolder {
     position: relative;
-    display: grid;
-    place-items: center;
-    border-radius: 10px;
-    overflow: hidden;
-    a{
+    flex: 1;
+    padding: 10px;
+    a {
+      display: block;
+      height: 100%;
       user-select: none;
     }
     .actionButtons {
@@ -71,12 +68,10 @@
       justify-content: space-between;
       column-gap: 10px;
       width: 100%;
-      height: fit-content;
       position: absolute;
-      bottom: 5px;
       top: 0;
+      left: 0;
       z-index: 99;
-      padding: 0 5px;
       color: #008080;
     }
     label {
@@ -90,6 +85,7 @@
       display: grid;
       place-items: center;
       color: white;
+      border-radius: 10px;
     }
   }
 }
@@ -112,8 +108,11 @@
 }
 
 .cardBox__img {
-  width: 200px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   margin: 0 auto;
+  border-radius: 10px;
 }
 
 .cardbox__price-div {

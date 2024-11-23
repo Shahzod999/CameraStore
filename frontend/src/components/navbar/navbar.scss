@@ -2,6 +2,12 @@
 @import "/src/media.scss";
 
 .navbar {
+  &__header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 99;
+  }
   &__box-first {
     width: 100%;
     height: fit-content;
@@ -59,7 +65,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 25px;
+    padding-top: 15px;
     gap: 30px;
 
     @include media(1250) {
@@ -141,45 +147,28 @@
   }
 
   &__form {
-    max-width: 500px;
-    width: 100%;
-    height: fit-content;
-    position: relative;
-
-    @include media(925) {
-      max-width: 300px;
-      width: 100%;
-    }
+    display: flex;
+    align-items: center;
+    background: #008080;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid #008080;
   }
 
   &__input {
-    max-width: 500px;
-    width: 100%;
-    height: fit-content;
-    border: 2px solid #008080;
     background: #f5f5f5;
-    border-radius: 10px;
     outline: none;
+    border: none;
     padding: 11px 20px;
     font-size: 16px;
     font-weight: 500;
     color: #2a2a2a;
-
-    @include media(925) {
-      max-width: 300px;
-      width: 100%;
-    }
   }
 
   &__form-logo {
-    position: absolute;
-    right: 0;
     font-size: 23px;
     color: #fff;
-    background: #008080;
-    padding: 7px 13px;
-    padding-top: 8px;
-    border-radius: 0 10px 10px 0;
+    padding: 6px 11px;
   }
 
   &__list {
@@ -416,6 +405,7 @@
   }
 
   &__sec-link {
+    cursor: pointer;
     color: #888888;
     font-weight: 500;
     position: relative;
