@@ -8,16 +8,18 @@ import { VscClearAll } from "react-icons/vsc";
 import { IoMdImages } from "react-icons/io";
 import { useDeleteProductsMutation, useUpdateProductMutation } from "../../app/api/productsApiSlice";
 import { useGetAllCategoryQuery } from "../../app/api/categoryApiSlice";
-import { useAppDispatch } from "../../app/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks/hooks";
 import { addProductsToBasket, deleteFromBasket } from "../../app/features/basketSlice";
 import Button from "./Button";
 import { Product } from "../../app/types/ProductTypes";
+import { selecteduserInfo } from "../../app/features/useInfoSlice";
 
 interface CardBoxProps {
   item: Product;
 }
 
 const CardBox = ({ item }: CardBoxProps) => {
+  const userInfo = useAppSelector(selecteduserInfo);
   const { pathname } = useLocation();
   const isBasketPage = pathname === "/basket";
   const dispatch = useAppDispatch();
@@ -141,10 +143,12 @@ const CardBox = ({ item }: CardBoxProps) => {
     <div className="cardBox">
       <div className={`cardBox__div ${updateLoading || deleteLoading ? "loading" : ""}`}>
         <div className="changeImageHolder">
-          <div className="actionButtons">
-            {edit ? <VscClearAll className="actionClear" onClick={handleEditClear} size={25} /> : <FaPencilAlt className="actionTrash" onClick={handleEdit} size={25} />}
-            <BiTrash onClick={handleDelete} size={28} />
-          </div>
+          {userInfo && (
+            <div className="actionButtons">
+              {edit ? <VscClearAll className="actionClear" onClick={handleEditClear} size={25} /> : <FaPencilAlt className="actionTrash" onClick={handleEdit} size={25} />}
+              <BiTrash onClick={handleDelete} size={28} />
+            </div>
+          )}
 
           {edit && (
             <>

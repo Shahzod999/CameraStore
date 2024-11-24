@@ -9,6 +9,7 @@ const initialState: SearchState = {
   search: ""
 }
 
+
 export const searchSlice = createSlice({
   name: "searchParam",
   initialState,

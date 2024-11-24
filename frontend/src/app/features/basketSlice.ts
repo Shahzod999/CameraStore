@@ -27,7 +27,7 @@ export const basketSlice = createSlice({
 
     },
     deleteFromBasket: (state, action) => {
-      state.basket = state.basket.filter((id) => id !== action.payload)
+      state.basket = state.basket.filter((id: string) => id !== action.payload)
       localStorage.setItem("basket", JSON.stringify(state.basket))
     }
   }

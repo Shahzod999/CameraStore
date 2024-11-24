@@ -1,4 +1,6 @@
 import { useGetAllCategoryQuery } from "../../app/api/categoryApiSlice";
+import { addCategory, deleteCategory } from "../../app/features/categorySlice";
+import { useAppDispatch } from "../../app/hooks/hooks";
 import Loading from "../loading/Loading";
 import "./category.scss";
 
@@ -8,7 +10,16 @@ interface CategoryProps {
 }
 
 const Category = ({ category, setCategory }: CategoryProps) => {
+  const dispatch = useAppDispatch();
   const { data, isLoading, isFetching } = useGetAllCategoryQuery();
+
+  const handleCheck = (value, id) => {
+    if (value) {
+      dispatch(addCategory(id));
+    } else {
+      dispatch(deleteCategory(id));
+    }
+  };
 
   return (
     <div className="categoryHolder" style={{ pointerEvents: category ? "" : "none" }}>
@@ -19,7 +30,8 @@ const Category = ({ category, setCategory }: CategoryProps) => {
           ) : (
             data?.map((item) => (
               <div className="category__brand-div" key={item._id}>
-                <h1 className="category__title">{item.name}</h1>
+                <input type="checkbox" name="category" id="category-checkbox" onChange={(e) => handleCheck(e.target.checked, item._id)} />
+                <label className="category__title">{item.name}</label>
                 <ul className="category__list">
                   <li className="category__item">1. Logitech C920</li>
                   <li className="category__item">2. Logitech C922 Pro</li>

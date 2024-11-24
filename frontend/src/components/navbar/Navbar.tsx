@@ -1,4 +1,4 @@
-import React, { useState, Suspense } from "react";
+import React, { useState, Suspense, useEffect } from "react";
 import "./navbar.scss";
 import { IoLocationSharp } from "react-icons/io5";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -18,11 +18,13 @@ import { useDebounce } from "../../app/hooks/debounce";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment, ContactShadows } from "@react-three/drei";
 import Scene from "../../../public/Scene";
+import { searchProducts } from "../../app/features/searchSlice";
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
   const [category, setCategory] = useState(false);
   const [searchParam, setSearchParam] = useState("");
+  const debouncedSearch = useDebounce(searchParam, 500);
   const userInfo = useAppSelector(selecteduserInfo);
   const [logOut] = useLogOutMutation();
 
@@ -39,11 +41,10 @@ const Navbar = () => {
     setSearchParam(e.target.value);
   };
 
-  const debounce = useDebounce(searchParam);
-  
-  
-  
-  
+  useEffect(() => {
+    dispatch(searchProducts(debouncedSearch));
+  }, [debouncedSearch, dispatch]);
+
   return (
     <>
       <div className="navbar">
@@ -120,7 +121,6 @@ const Navbar = () => {
           <Environment preset="sunset" />
           <ContactShadows position={[0, -4, 0]} opacity={0.5} scale={50} blur={2} far={10} resolution={256} color="#000000" />
         </Canvas>
-
       </div>
       <Cookie />
 

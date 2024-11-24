@@ -2,17 +2,28 @@ import { useState, useMemo } from "react";
 import CardBox from "./CardBox";
 import Header from "../header/Header";
 import Brand from "../brand/Brand";
-import { useFetchAllProductsQuery, useSearchProductsQuery } from "../../app/api/productsApiSlice";
+import { useFetchAllProductsQuery, useFilteredProductsQuery, useSearchProductsQuery } from "../../app/api/productsApiSlice";
 import { useAppSelector } from "../../app/hooks/hooks";
 import { selectedSearchParams } from "../../app/features/searchSlice";
 import Loading from "../loading/Loading";
 import { Product } from "../../app/types/ProductTypes";
+import { selectedCategoryCheck } from "../../app/features/categorySlice";
 
 const card = () => {
-  const { data: product = [], isLoading } = useFetchAllProductsQuery({});
-  const searchParams = useAppSelector(selectedSearchParams);
-  const { data: searchdata, isFetching } = useSearchProductsQuery(searchParams, {
-    skip: searchParams.length < 2,
+  const check = useAppSelector(selectedCategoryCheck);
+  // const { data: product = [], isLoading } = useFetchAllProductsQuery({});
+  const { data: product = [], isLoading } = useFilteredProductsQuery(check);
+  // console.log(filteredData, "data");
+
+  const searchParams = useAppSelector(selectedSearchParams).trim();
+
+  const {
+    data: searchdata,
+    isFetching,
+    isError,
+    error,
+  } = useSearchProductsQuery(searchParams, {
+    skip: !searchParams,
   });
 
   const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
@@ -49,7 +60,10 @@ const card = () => {
       </div>
       <div className="card">
         <div className="container">
-          <div className="card__box">{isFetching ? <Loading /> : searchdata?.map((item: Product) => <CardBox item={item} key={item._id} />)}</div>
+          <div className="card__box">
+            {isFetching && <Loading />}
+            {isError ? <p className="error-message">{error?.data?.error || "No products found for your search."}</p> : searchParams?.length ? searchdata?.map((item: Product) => <CardBox item={item} key={item._id} />) : ""}
+          </div>
           <div className="card__box">
             {filteredProducts?.map((item: Product) => (
               <CardBox item={item} key={item._id} />

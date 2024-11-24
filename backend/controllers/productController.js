@@ -90,14 +90,19 @@ const fetchAllproducts = asyncHandler(async (req, res) => {
 
 const searchProducts = asyncHandler(async (req, res) => {
   const { name } = req.query;
+  const valueName = name?.trim();
+  console.log(!valueName);
 
-  if (!name) {
-    res.status(404).json({ error: "Not found" });
-    return;
+  if (!valueName) {
+    return res.status(404).json({ error: "Search query cannot be empty" });
   }
 
   try {
-    const products = await Product.find({ name: { $regex: name, $options: "i" } });
+    const products = await Product.find({ name: { $regex: valueName, $options: "i" } });
+    console.log(products.length == 0);
+    if (products.length == 0) {
+      return res.status(404).json({ error: "Not found" });
+    }
     res.status(200).json(products);
   } catch (error) {
     console.error(error);
@@ -107,11 +112,10 @@ const searchProducts = asyncHandler(async (req, res) => {
 
 const filterProducts = asyncHandler(async (req, res) => {
   try {
-    const { checked, radio } = req.body;
+    const { checked } = req.body;
 
     let args = {};
     if (checked.length > 0) args.category = checked;
-    if (radio.length) args.price = { $gte: radio[0], $lte: radio[1] };
 
     const products = await Product.find(args);
     res.json(products);
