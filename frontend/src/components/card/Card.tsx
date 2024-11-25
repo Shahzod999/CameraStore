@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import CardBox from "./CardBox";
 import Header from "../header/Header";
 import Brand from "../brand/Brand";
-import { useFetchAllProductsQuery, useFilteredProductsQuery, useSearchProductsQuery } from "../../app/api/productsApiSlice";
+import { useFilteredProductsQuery, useSearchProductsQuery } from "../../app/api/productsApiSlice";
 import { useAppSelector } from "../../app/hooks/hooks";
 import { selectedSearchParams } from "../../app/features/searchSlice";
 import Loading from "../loading/Loading";
@@ -11,17 +11,13 @@ import { selectedCategoryCheck } from "../../app/features/categorySlice";
 
 const card = () => {
   const check = useAppSelector(selectedCategoryCheck);
-  // const { data: product = [], isLoading } = useFetchAllProductsQuery({});
   const { data: product = [], isLoading } = useFilteredProductsQuery(check);
-  // console.log(filteredData, "data");
-
   const searchParams = useAppSelector(selectedSearchParams).trim();
 
   const {
     data: searchdata,
     isFetching,
     isError,
-    error,
   } = useSearchProductsQuery(searchParams, {
     skip: !searchParams,
   });
@@ -50,7 +46,7 @@ const card = () => {
           <ul className="navbar__list-sec">
             {uniqueBrands.map((brand, index) => (
               <li className="navbar__item" key={index}>
-                <span className="navbar__sec-link" onClick={() => handleBrandClick(brand as string)}>
+                <span className="navbar__sec-link" onClick={() => handleBrandClick(brand)}>
                   {brand}
                 </span>
               </li>
@@ -62,7 +58,7 @@ const card = () => {
         <div className="container">
           <div className="card__box">
             {isFetching && <Loading />}
-            {isError ? <p className="error-message">{error?.data?.error || "No products found for your search."}</p> : searchParams?.length ? searchdata?.map((item: Product) => <CardBox item={item} key={item._id} />) : ""}
+            {isError ? <p className="error-message">No products found for your search.</p> : searchParams?.length ? searchdata?.map((item: Product) => <CardBox item={item} key={item._id} />) : ""}
           </div>
           <div className="card__box">
             {filteredProducts?.map((item: Product) => (

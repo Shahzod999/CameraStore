@@ -25,7 +25,7 @@ const CardBox = ({ item }: CardBoxProps) => {
   const dispatch = useAppDispatch();
   const [originalProduct, setOriginalProduct] = useState(item);
   const [product, setProduct] = useState(item);
-  const { _id, name, description, brand, price, image, category, quantity } = product;
+  const { _id, name, description, brand, price, image, quantity } = product;
 
   const { data: categoryState } = useGetAllCategoryQuery();
   const [deleteProducts, { isLoading: deleteLoading }] = useDeleteProductsMutation();
@@ -138,7 +138,6 @@ const CardBox = ({ item }: CardBoxProps) => {
     dispatch(deleteFromBasket(item._id));
     console.log("basleerwerF");
   };
-
 
   console.log(item);
 

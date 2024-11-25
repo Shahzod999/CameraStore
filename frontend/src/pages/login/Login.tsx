@@ -1,7 +1,5 @@
 import { useState } from "react";
 import "./login.scss";
-import { FaFacebook } from "react-icons/fa6";
-import { BsGoogle } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import { useLoginUserMutation, useUserRegisterMutation } from "../../app/api/userApiSlice";
 import { ErrorState, UserState } from "../../app/types/UserTypes";
