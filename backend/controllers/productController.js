@@ -80,7 +80,7 @@ const fetchProductById = asyncHandler(async (req, res) => {
 
 const fetchAllproducts = asyncHandler(async (req, res) => {
   try {
-    const products = await Product.find({}).populate("category").sort({ createdAt: -1 });
+    const products = await Product.find({}).sort({ createdAt: -1 }).populate("category")
     res.json(products);
   } catch (error) {
     console.error(error);
@@ -98,7 +98,7 @@ const searchProducts = asyncHandler(async (req, res) => {
   }
 
   try {
-    const products = await Product.find({ name: { $regex: valueName, $options: "i" } });
+    const products = await Product.find({ name: { $regex: valueName, $options: "i" } }).populate("category")
     console.log(products.length == 0);
     if (products.length == 0) {
       return res.status(404).json({ error: "Not found" });
@@ -117,7 +117,7 @@ const filterProducts = asyncHandler(async (req, res) => {
     let args = {};
     if (checked.length > 0) args.category = checked;
 
-    const products = await Product.find(args);
+    const products = await Product.find(args).populate("category")
     res.json(products);
   } catch (error) {
     console.error(error);

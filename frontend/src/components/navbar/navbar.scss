@@ -8,6 +8,7 @@
     width: 100%;
     z-index: 99;
   }
+
   &__box-first {
     width: 100%;
     height: fit-content;
@@ -37,6 +38,7 @@
       from {
         transform: rotateY(0deg);
       }
+
       to {
         transform: rotateY(360deg);
       }
@@ -106,6 +108,7 @@
     overflow: hidden;
     cursor: pointer;
     box-shadow: 0 0 0px 1px #008080 inset;
+
     span {
       display: grid;
       place-items: center;
@@ -432,6 +435,6 @@
   }
 }
 
-canvas {
-  min-height: 500px !important;
-}
+// canvas {
+//   min-height: 500px !important;
+// }

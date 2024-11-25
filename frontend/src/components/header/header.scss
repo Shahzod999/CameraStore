@@ -1,4 +1,7 @@
 @import "/src/media.scss";
 
-.header {
+.header {}
+
+canvas {
+    min-height: 500px !important;
 }

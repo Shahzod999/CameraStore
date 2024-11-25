@@ -112,7 +112,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        <Canvas>
+        {/* <Canvas>
           <ambientLight intensity={2} />
           <OrbitControls />
           <Suspense fallback={null}>
@@ -120,7 +120,7 @@ const Navbar = () => {
           </Suspense>
           <Environment preset="sunset" />
           <ContactShadows position={[0, -4, 0]} opacity={0.5} scale={50} blur={2} far={10} resolution={256} color="#000000" />
-        </Canvas>
+        </Canvas> */}
       </div>
       <Cookie />
 

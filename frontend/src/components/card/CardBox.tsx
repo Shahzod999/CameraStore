@@ -139,6 +139,9 @@ const CardBox = ({ item }: CardBoxProps) => {
     console.log("basleerwerF");
   };
 
+
+  console.log(item);
+
   return (
     <div className="cardBox">
       <div className={`cardBox__div ${updateLoading || deleteLoading ? "loading" : ""}`}>

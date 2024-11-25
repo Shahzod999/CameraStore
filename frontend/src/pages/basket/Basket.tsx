@@ -16,11 +16,13 @@ const Basket = () => {
     <div className="card__box">
       <div className="container">
         {isFetching && <Loading />}
-        {data?.map((item) => (
-          <div className="basketCard" key={item._id}>
-            <CardBox item={item} />
+        <div className="basketCard" >
+          <div className="card__box">
+            {data?.map((item) => (
+              <CardBox item={item} key={item._id} />
+            ))}
           </div>
-        ))}
+        </div>
       </div>
     </div>
   );
